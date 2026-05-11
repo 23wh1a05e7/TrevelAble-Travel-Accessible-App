@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="TravelAble - Find the best travel options for your next trip"/>
+  <title>TravelAble - Search Your Journey</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f0f0; }
+    .header { background: #007bff; color: #fff; padding: 20px; text-align: center; font-size: 24px; }
+    .nav-bar { background: #0056b3; padding: 10px; text-align: center; }
+    .nav-bar button { background: #fff; color: #007bff; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; border-radius: 5px; font-size: 16px; display: inline-flex; align-items: center; gap: 5px; }
+    .nav-bar button i { font-size: 20px; }
+    .search-container { padding: 20px; text-align: center; background: #fff; margin: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); display: none; }
+    .search-container form { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; }
+    .search-container input, .search-container select { padding: 10px; margin: 5px; border: 1px solid #ccc; border-radius: 5px; width: 150px; }
+    .search-container button { background: #007bff; color: #fff; border: none; cursor: pointer; padding: 10px 20px; border-radius: 5px; }
+    .result-list { margin: 20px; }
+    .result { background: #fff; margin: 10px 0; padding: 30px; border-radius: 10px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); }
+    .book-btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .assistant-container {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="header">TravelAble - Plan Your Journey</div>
+
+  <div class="nav-bar">
+    <button onclick="showHotelForm()"><i class="fas fa-hotel"></i> Hotels</button>
+    <button onclick="showTrainForm()"><i class="fas fa-train"></i> Trains</button>
+    <button onclick="showBusForm()"><i class="fas fa-bus"></i> Buses</button>
+  </div>
+
+  <!-- Medical Assistant Option -->
+  <div class="assistant-container">
+    <input type="checkbox" id="medical-assistant" />
+    <label for="medical-assistant">Include Medical Assistant for Disabled Support</label>
+    <select id="assistant-gender">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+
+  <!-- Hotel Search Form -->
+  <div class="search-container" id="hotel-form">
+    <h3>Search Hotels</h3>
+    <form>
+      <select id="city">
+        <option value="">Select City</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Chennai">Chennai</option>
+      </select>
+      <input type="date" id="checkin" />
+      <input type="date" id="checkout" />
+      <button type="button" onclick="searchHotels()">Search Hotels</button>
+    </form>
+  </div>
+
+  <!-- Train Search Form -->
+  <div class="search-container" id="train-form">
+    <h3>Train Search</h3>
+    <form>
+      <select id="from">
+        <option value="">From (Select Region)</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Chennai">Chennai</option>
+      </select>
+      <select id="to">
+        <option value="">To (Select Region)</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Chennai">Chennai</option>
+      </select>
+      <input type="date" id="train-travel-date" />
+      <button type="button" onclick="bookTrainTicket()">Book Train Ticket</button>
+    </form>
+  </div>
+
+  <!-- Bus Search Form -->
+  <div class="search-container" id="bus-form">
+    <h3>Bus Search</h3>
+    <form>
+      <select id="bus-from">
+        <option value="">From (Select Region)</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Chennai">Chennai</option>
+      </select>
+      <select id="bus-to">
+        <option value="">To (Select Region)</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Chennai">Chennai</option>
+      </select>
+      <input type="date" id="bus-travel-date" />
+      <button type="button" onclick="searchBuses()">Search Buses</button>
+    </form>
+  </div>
+
+  <div class="result-list" id="result-list"></div>
+
+  <script>
+    function getAssistantParams() {
+      const assist = document.getElementById("medical-assistant").checked;
+      const gender = document.getElementById("assistant-gender").value;
+      return `&medical_assistant=${assist}&gender=${gender}`;
+    }
+
+    function showHotelForm() {
+      document.getElementById("hotel-form").style.display = "block";
+      document.getElementById("train-form").style.display = "none";
+      document.getElementById("bus-form").style.display = "none";
+      document.getElementById("result-list").innerHTML = "";
+    }
+
+    function showTrainForm() {
+      document.getElementById("train-form").style.display = "block";
+      document.getElementById("hotel-form").style.display = "none";
+      document.getElementById("bus-form").style.display = "none";
+      document.getElementById("result-list").innerHTML = "";
+    }
+
+    function showBusForm() {
+      document.getElementById("bus-form").style.display = "block";
+      document.getElementById("hotel-form").style.display = "none";
+      document.getElementById("train-form").style.display = "none";
+      document.getElementById("result-list").innerHTML = "";
+    }
+
+    function searchHotels() {
+      const city = document.getElementById('city').value;
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      const resultListDiv = document.getElementById('result-list');
+
+      if (!city || !checkin || !checkout) {
+        alert("Please fill all hotel search fields.");
+        return;
+      }
+
+      localStorage.setItem("hotel_checkin", checkin);
+      localStorage.setItem("hotel_checkout", checkout);
+
+      const assistantParams = getAssistantParams();
+      resultListDiv.innerHTML = 'Loading...';
+
+      fetch(`http://localhost:5000/hotels?location=${city}${assistantParams}`)
+        .then(res => res.json())
+        .then(data => {
+          resultListDiv.innerHTML = '';
+          if (data.length === 0) {
+            resultListDiv.innerHTML = 'No hotels found.';
+          } else {
+            data.forEach(hotel => {
+              const div = document.createElement('div');
+              div.className = 'result';
+              div.innerHTML = ` 
+                <strong>${hotel.name}</strong><br>
+                Location: ${hotel.location}<br>
+                Price: ₹${hotel.price}<br>
+                Rating: ${hotel.rating}/5<br>
+                <a class="book-btn" href="/booking">Book Now</a>`;
+              resultListDiv.appendChild(div);
+            });
+          }
+        })
+        .catch(error => {
+          resultListDiv.innerHTML = 'Error fetching data.';
+          console.error(error);
+        });
+    }
+
+    function bookTrainTicket() {
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const date = document.getElementById("train-travel-date").value;
+      const resultListDiv = document.getElementById("result-list");
+
+      if (!from || !to || !date) {
+        alert("Please fill all train search fields.");
+        return;
+      }
+
+      localStorage.setItem("train_travel_date", date);
+
+      const assistantParams = getAssistantParams();
+      resultListDiv.innerHTML = "Loading...";
+
+      fetch(`http://localhost:5000/trains?from=${from}&to=${to}${assistantParams}`)
+        .then((res) => res.json())
+        .then((data) => {
+          resultListDiv.innerHTML = "";
+          if (data.length === 0) {
+            resultListDiv.innerHTML = "<p>No trains found.</p>";
+            return;
+          }
+
+          data.forEach((train) => {
+            const div = document.createElement("div");
+            div.className = "result";
+            div.innerHTML = ` 
+              <strong>${train.train_name}</strong><br>
+              From: ${train.from_location}<br>
+              To: ${train.to_location}<br>
+              Departure: ${train.departure_time}<br>
+              Travel Date: ${date}<br>
+              <a class="book-btn" href="/trainseat">Book Now</a>`;
+            resultListDiv.appendChild(div);
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          resultListDiv.innerHTML = "<p>Error fetching train data.</p>";
+        });
+    }
+
+    function searchBuses() {
+      const from = document.getElementById("bus-from").value;
+      const to = document.getElementById("bus-to").value;
+      const date = document.getElementById("bus-travel-date").value;
+      const resultListDiv = document.getElementById("result-list");
+
+      if (!from || !to || !date) {
+        alert("Please fill all bus search fields.");
+        return;
+      }
+
+      localStorage.setItem("bus_travel_date", date);
+
+      const assistantParams = getAssistantParams();
+      resultListDiv.innerHTML = "Loading...";
+
+      fetch(`http://localhost:5000/buses?from=${from}&to=${to}${assistantParams}`)
+        .then((res) => res.json())
+        .then((data) => {
+          resultListDiv.innerHTML = "";
+          if (data.length === 0) {
+            resultListDiv.innerHTML = "<p>No buses found.</p>";
+            return;
+          }
+
+          data.forEach((bus) => {
+            const div = document.createElement("div");
+            div.className = "result";
+            div.innerHTML = ` 
+              <strong>${bus.bus_name}</strong><br>
+              From: ${bus.from_location}<br>
+              To: ${bus.to_location}<br>
+              Departure Time: ${bus.departure_time}<br>
+              Arrival Time: ${bus.arrival_time}<br>
+              Travel Date: ${date}<br>
+              <a class="book-btn" href="/busseat">Book Now</a>`;
+            resultListDiv.appendChild(div);
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          resultListDiv.innerHTML = "<p>Error fetching bus data.</p>";
+        });
+    }
+  </script>
+</body>
+</html>
+

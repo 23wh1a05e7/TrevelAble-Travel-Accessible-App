@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Train Seat Booking</title>
+  <style>
+    :root {
+      --available: #4CAF50;
+      --selected: #FF9800;
+      --booked: #F44336;
+      --ladies: #E91E63;
+      --disabled: #9E9E9E;
+      --text-light: #FFFFFF;
+      --border-color: #E0E0E0;
+      --bg-color: #F5F5F5;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      padding: 10px;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .seat-container {
+      padding: 15px;
+    }
+    
+    .seat-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .seat {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .seat.available {
+      background-color: var(--available);
+      color: var(--text-light);
+    }
+    
+    .seat.selected {
+      background-color: var(--selected);
+      color: var(--text-light);
+    }
+    
+    .seat.booked {
+      background-color: var(--booked);
+      color: var(--text-light);
+      cursor: not-allowed;
+    }
+    
+    .seat.ladies {
+      background-color: var(--ladies);
+      color: var(--text-light);
+      cursor: not-allowed;
+    }
+    
+    .seat.disabled {
+      background-color: var(--disabled);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+      justify-content: center;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+    }
+    
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    
+    .fare-details {
+      padding: 15px;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .fare-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    
+    .fare-total {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .continue-btn {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        padding: 12px;
+        background-color: #2196F3;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+      }
+      
+    
+    .driver-seat {
+      grid-column: span 4;
+      text-align: center;
+      font-size: 10px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="seat-container">
+      <div class="seat-layout">
+        <div class="driver-seat">36    2</div>
+        <div class="seat available">6</div>
+        <div class="seat available">5</div>
+        <div class="seat available">4</div>
+        <div class="seat available">3</div>
+        <div class="seat ladies">10</div>
+        <div class="seat ladies">9</div>
+        <div class="seat ladies">8</div>
+        <div class="seat ladies">7</div>
+        <div class="seat available">14</div>
+        <div class="seat booked">13</div>
+        <div class="seat available">12</div>
+        <div class="seat available">11</div>
+        <div class="seat available">18</div>
+        <div class="seat available">17</div>
+        <div class="seat available">16</div>
+        <div class="seat available">15</div>
+        <div class="seat available">22</div>
+        <div class="seat available">21</div>
+        <div class="seat available">20</div>
+        <div class="seat available">19</div>
+        <div class="seat available">26</div>
+        <div class="seat available">25</div>
+        <div class="seat available">24</div>
+        <div class="seat available">23</div>
+        <div class="seat available">30</div>
+        <div class="seat available">29</div>
+        <div class="seat available">28</div>
+        <div class="seat available">27</div>
+        <div class="seat disabled">35</div>
+        <div class="seat disabled">34</div>
+        <div class="seat disabled">33</div>
+        <div class="seat disabled">32</div>
+        <div class="seat disabled">31</div>
+      </div>
+      
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: var(--available);"></div>
+          <span>Available</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: var(--selected);"></div>
+          <span>Selected</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: var(--booked);"></div>
+          <span>Booked</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: var(--ladies);"></div>
+          <span>Ladies</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: var(--disabled);"></div>
+          <span>Disabled</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="fare-details">
+      <div class="fare-row">
+        <span>Ticket Fare</span>
+        <span>Rs 0.00</span>
+      </div>
+    </div>
+    
+    <a class="continue-btn" href="/payment">Continue to Payment</a>
+  </div>
+
+  <script>
+    // Add seat selection functionality
+    document.querySelectorAll('.seat.available').forEach(seat => {
+      seat.addEventListener('click', function() {
+        this.classList.toggle('selected');
+        updateFare();
+      });
+    });
+    
+    function updateFare() {
+      const selectedSeats = document.querySelectorAll('.seat.selected').length;
+      const fareElement = document.querySelector('.fare-row:last-child span:last-child');
+      fareElement.textContent = `Rs ${(selectedSeats * 500).toFixed(2)}`;
+    }
+    
+    // Continue button functionality
+    document.querySelector('.continue-btn').addEventListener('click', function() {
+      const selectedSeats = document.querySelectorAll('.seat.selected');
+      if (selectedSeats.length === 0) {
+        alert('Please select at least one seat');
+        return;
+      }
+      const seatNumbers = Array.from(selectedSeats).map(seat => seat.textContent).join(', ');
+      const quantity = selectedSeats.length;
+      const subtotal = quantity * 500;
+      const tax = subtotal * 0.083; // 8.3% tax
+      const total = subtotal + tax;
+      
+      // Store booking details
+      localStorage.setItem('bookingDetails', JSON.stringify({
+        product: 'Train Seat Booking',
+        itemNumber: seatNumbers,
+        quantity: quantity,
+        subtotal: subtotal.toFixed(2),
+        tax: tax.toFixed(2),
+        total: total.toFixed(2),
+        currency: 'Rs'
+      }));
+      
+      // Redirect to payment page
+      //window.location.href = 'payment.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelCare - Medical Assistant Request</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #ff7e5f;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --success: #48bb78;
+            --gray: #718096;
+            --light-gray: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        h3 {
+            color: var(--primary);
+            margin: 25px 0 15px 0;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.1);
+            outline: none;
+            background-color: white;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .checkbox-label, .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .checkbox-label input, .radio-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: #f0f4ff;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .other-input {
+            margin-top: 10px;
+            display: none;
+            width: 100%;
+        }
+
+        .other-input.show {
+            display: block;
+        }
+
+        /* Better spacing for sections */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-body {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            .footer-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .checkbox-group, .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> TravelCare Medical Assistant</h1>
+            <p>Fill this form to request a medical assistant for your journey</p>
+        </div>
+
+        <div class="form-body">
+            <form id="medicalAssistantForm">
+                <!-- Personal Details -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Personal Details</h3>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Male" checked> Male
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Female"> Female
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="Other"> Other
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Number</label>
+                        <input type="tel" id="contact" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact Person</label>
+                        <input type="text" id="emergencyContact" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyNumber">Emergency Contact Number</label>
+                        <input type="tel" id="emergencyNumber" class="form-control" required>
+                    </div>
+                </div>
+
+                <!-- Disability & Medical Information -->
+                <div class="form-section">
+                    <h3><i class="fas fa-wheelchair"></i> Disability & Medical Information</h3>
+                    <div class="form-group">
+                        <label>Type of Disability (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="disability" value="Mobility"> Mobility impairment
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="disability" value="Visual"> Visual impairment
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="disability" value="Hearing"> Hearing impairment
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="disability" value="Intellectual"> Intellectual disability
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="disability" value="Chronic"> Chronic illness
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="otherDisabilityCheckbox"> Other
+                            </label>
+                        </div>
+                        <input type="text" id="otherDisability" class="form-control other-input" placeholder="Please specify">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicalCondition">Medical Condition Details (if any)</label>
+                        <textarea id="medicalCondition" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Required Assistance Level</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="assistanceLevel" value="Basic" checked> Basic
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="assistanceLevel" value="Moderate"> Moderate
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="assistanceLevel" value="High"> High
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Special Requirements (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="requirements" value="Oxygen"> Oxygen support
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="requirements" value="Wheelchair"> Wheelchair-accessible vehicle
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="requirements" value="SignLanguage"> Sign language interpreter
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="otherRequirementCheckbox"> Other
+                            </label>
+                        </div>
+                        <input type="text" id="otherRequirement" class="form-control other-input" placeholder="Please specify">
+                    </div>
+                </div>
+
+                <!-- Travel Details -->
+                <div class="form-section">
+                    <h3><i class="fas fa-plane"></i> Travel Details</h3>
+                    <div class="form-group">
+                        <label for="tripType">Trip Type</label>
+                        <select id="tripType" class="form-control">
+                            <option value="One-way">One-way</option>
+                            <option value="Round trip">Round trip</option>
+                            <option value="Multi-city">Multi-city</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departure">Departure City</label>
+                        <input type="text" id="departure" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Destination City</label>
+                        <input type="text" id="destination" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="travelDates">Travel Dates</label>
+                        <input type="text" id="travelDates" class="form-control" placeholder="DD/MM/YYYY to DD/MM/YYYY" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mode of Travel</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="travelMode" value="Flight" checked> Flight
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="travelMode" value="Train"> Train
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="travelMode" value="Bus"> Bus
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="travelMode" value="Car"> Car
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bookingRef">Booking Reference (if any)</label>
+                        <input type="text" id="bookingRef" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Medical Assistant Preferences -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user-nurse"></i> Medical Assistant Preferences</h3>
+                    <div class="form-group">
+                        <label for="assistantGender">Gender Preference for Assistant</label>
+                        <select id="assistantGender" class="form-control">
+                            <option value="No preference">No preference</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="language">Language Preference</label>
+                        <input type="text" id="language" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="certifications">Any Specific Certification Required?</label>
+                        <input type="text" id="certifications" class="form-control" placeholder="e.g., CPR-trained, nursing background">
+                    </div>
+                </div>
+
+                <!-- Additional Requests -->
+                <div class="form-section">
+                    <h3><i class="fas fa-utensils"></i> Additional Requests</h3>
+                    <div class="form-group">
+                        <label for="dietary">Dietary Restrictions</label>
+                        <input type="text" id="dietary" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="otherNeeds">Other Special Needs</label>
+                        <textarea id="otherNeeds" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Consent -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="consent" required> I confirm that the information provided is accurate and agree to share medical details with the assigned assistant for safety purposes.
+                    </label>
+                </div>
+
+                <div class="footer-buttons">
+                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Submit Request</button>
+                    <button type="button" class="btn btn-outline"><i class="fas fa-save"></i> Save Draft</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide "Other" input fields
+        document.getElementById('otherDisabilityCheckbox').addEventListener('change', function() {
+            document.getElementById('otherDisability').classList.toggle('show', this.checked);
+        });
+
+        document.getElementById('otherRequirementCheckbox').addEventListener('change', function() {
+            document.getElementById('otherRequirement').classList.toggle('show', this.checked);
+        });
+
+        // Form submission
+        document.getElementById('medicalAssistantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!document.getElementById('consent').checked) {
+                alert('Please agree to the terms and conditions.');
+                return;
+            }
+
+            // Collect form data (in a real app, you would send this to your backend)
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Add other fields manually
+            data.otherDisability = document.getElementById('otherDisability').value;
+            data.otherRequirement = document.getElementById('otherRequirement').value;
+            
+            console.log('Form data:', data);
+            
+            // Show success message (replace with actual API call)
+            alert('Your request has been submitted successfully! We will contact you shortly.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

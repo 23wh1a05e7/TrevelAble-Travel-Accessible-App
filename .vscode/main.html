@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TravelAble</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f8f8f8;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links li {
+      display: inline;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .book-btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 5px;
+    }
+
+    .login-btn {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+
+    .login-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slideshow {
+      position: relative;
+      max-width: 100%;
+      height: 500px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      position: absolute;
+      text-align: center;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .hero-content i {
+      font-size: 50px;
+      margin-top: 10px;
+    }
+
+    .fade {
+      animation: fadeEffect 1s ease-in-out;
+    }
+
+    @keyframes fadeEffect {
+      from {opacity: 0.4} 
+      to {opacity: 1}
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">TravelAble</div>
+    <ul class="nav-links">
+      <li><a href="/book.html">Home</a></li>
+      <li><a href="/eat.html">Eat</a></li>
+      <li><a href="/play.html">Play</a></li>
+      <li><a href="/req.html">Request</a></li> <!-- Corrected here -->
+      <li><a class="book-btn" href="/book.html">Book Online</a></li>
+    </ul>
+    <a class="login-btn" href="/login.html">Log In</a>
+  </nav>
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="slideshow">
+      <div class="slide">
+        <img src="images/nature1.jpeg" alt="Nature 1">
+      </div>
+      <div class="slide">
+        <img src="images/nature2.jpeg" alt="Nature 2">
+      </div>
+      <div class="slide">
+        <img src="images/nature3.jpeg" alt="Nature 3">
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>LOSE | YOURSELF <br> DISCOVER | YOURSELF</h1>
+      <i class="fa-solid fa-plane"></i>
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+ 
+
+</body>
+</html>

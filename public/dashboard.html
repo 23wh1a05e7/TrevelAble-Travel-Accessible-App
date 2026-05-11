@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - TravelAble</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f8f8f8;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 50px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .user-info {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: #28a745;
+        }
+
+        .action-btn.danger {
+            background: #dc3545;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .card-icon.medical {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .card-icon.trip {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .card-icon.hotel {
+            background: linear-gradient(135deg, #fd7e14 0%, #e83e8c 100%);
+            color: white;
+        }
+
+        .card-icon.stats {
+            background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%);
+            color: white;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .activity-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .view-all-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 1px solid #667eea;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .activity-list {
+            space-y: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        .activity-icon.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .activity-icon.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .activity-icon.approved {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .activity-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .activity-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .activity-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .no-data i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .quick-actions {
+                justify-content: center;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><i class="fas fa-tachometer-alt"></i> My Dashboard</h1>
+        <p>Welcome back! Here's your travel and medical assistance overview.</p>
+    </div>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-text">
+                <h2 id="userName">Welcome!</h2>
+                <p>Manage your travel plans and medical assistance requests from here.</p>
+                <div class="user-info" id="userInfo">
+                    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+                    <p><strong>Member since:</strong> <span id="memberSince">Loading...</span></p>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <a href="/book.html" class="action-btn secondary">
+                    <i class="fas fa-plane"></i> Book Travel
+                </a>
+                <button class="action-btn danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon medical">
+                        <i class="fas fa-medkit"></i>
+                    </div>
+                    <h3 class="card-title">Medical Requests</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalRequests">0</span>
+                        <span class="stat-label">Total Requests</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="pendingRequests">0</span>
+                        <span class="stat-label">Pending</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="approvedRequests">0</span>
+                        <span class="stat-label">Approved</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="completedRequests">0</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon trip">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3 class="card-title">Travel History</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalTrips">0</span>
+                        <span class="stat-label">Total Trips</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="upcomingTrips">0</span>
+                        <span class="stat-label">Upcoming</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="completedTrips">0</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="cancelledTrips">0</span>
+                        <span class="stat-label">Cancelled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <div class="activity-header">
+                <h3 class="activity-title">Recent Activity</h3>
+                <a href="#" class="view-all-btn">View All</a>
+            </div>
+            <div id="activityList" class="activity-list">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading your recent activity...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const userEmail = localStorage.getItem('userEmail');
+        if (!userEmail) {
+            window.location.href = '/login.html';
+        }
+
+        // Load user data and dashboard info
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserProfile();
+            loadDashboardStats();
+            loadRecentActivity();
+        });
+
+        function loadUserProfile() {
+            document.getElementById('userEmail').textContent = userEmail;
+
+            // Load user details from API (you can add this endpoint later)
+            // For now, just show basic info
+            document.getElementById('userName').textContent = `Welcome back, ${userEmail.split('@')[0]}!`;
+            document.getElementById('memberSince').textContent = new Date().toLocaleDateString();
+        }
+
+        function loadDashboardStats() {
+            // Load medical requests stats
+            fetch(`/user/requests?email=${encodeURIComponent(userEmail)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const requests = data.requests || [];
+                        document.getElementById('totalRequests').textContent = requests.length;
+                        document.getElementById('pendingRequests').textContent =
+                            requests.filter(r => r.status === 'pending').length;
+                        document.getElementById('approvedRequests').textContent =
+                            requests.filter(r => r.status === 'approved').length;
+                        document.getElementById('completedRequests').textContent =
+                            requests.filter(r => r.status === 'completed').length;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading requests:', error);
+                });
+
+            // For now, set travel stats to 0 (you can add travel booking tracking later)
+            document.getElementById('totalTrips').textContent = '0';
+            document.getElementById('upcomingTrips').textContent = '0';
+            document.getElementById('completedTrips').textContent = '0';
+            document.getElementById('cancelledTrips').textContent = '0';
+        }
+
+        function loadRecentActivity() {
+            fetch(`/user/requests?email=${encodeURIComponent(userEmail)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const activityList = document.getElementById('activityList');
+
+                    if (data.success && data.requests && data.requests.length > 0) {
+                        const recentRequests = data.requests.slice(0, 5); // Show last 5
+
+                        activityList.innerHTML = recentRequests.map(request => {
+                            const statusClass = request.status.toLowerCase();
+                            const statusIcon = getStatusIcon(request.status);
+                            const formattedDate = new Date(request.created_at).toLocaleDateString();
+
+                            return `
+                                <div class="activity-item">
+                                    <div class="activity-icon ${statusClass}">
+                                        <i class="${statusIcon}"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Medical Assistance Request #${request.id}</h4>
+                                        <p><strong>Route:</strong> ${request.travel_from} → ${request.travel_to}</p>
+                                        <p><strong>Date:</strong> ${new Date(request.travel_date).toLocaleDateString()}</p>
+                                        <div class="activity-date">${formattedDate}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    } else {
+                        activityList.innerHTML = `
+                            <div class="no-data">
+                                <i class="fas fa-clipboard-list"></i>
+                                <h4>No Recent Activity</h4>
+                                <p>You haven't made any medical assistance requests yet.</p>
+                                <a href="/medical-assistant" class="action-btn" style="margin-top: 15px;">
+                                    <i class="fas fa-plus-circle"></i> Make Your First Request
+                                </a>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading activity:', error);
+                    document.getElementById('activityList').innerHTML = `
+                        <div class="no-data">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4>Unable to Load Activity</h4>
+                            <p>Please try refreshing the page.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function getStatusIcon(status) {
+            switch (status.toLowerCase()) {
+                case 'pending': return 'fas fa-clock';
+                case 'approved': return 'fas fa-check-circle';
+                case 'completed': return 'fas fa-check-double';
+                case 'rejected': return 'fas fa-times-circle';
+                default: return 'fas fa-question-circle';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            window.location.href = '/login.html';
+        }
+
+        // Auto-refresh data every 30 seconds
+        setInterval(() => {
+            loadDashboardStats();
+            loadRecentActivity();
+        }, 30000);
+    </script>
+
+</body>
+</html>

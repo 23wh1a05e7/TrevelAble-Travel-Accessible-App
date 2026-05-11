@@ -1,0 +1,118 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f8f8;
+  }
+  
+  /* Navigation Bar */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  /* Navigation Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links li {
+    display: inline;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* Login Button */
+  .login-btn {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px; /* Moves Login Button slightly left */
+  }
+  
+  .login-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Slideshow Fix */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+  }
+  
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fits properly */
+  }
+  
+  /* Show the first slide by default */
+  .slide:first-child {
+    display: block;
+  }
+  
+  /* Hero Content (Text & Icon) */
+  .hero-content {
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    z-index: 2;
+  }
+  
+  .hero-content i {
+    font-size: 50px;
+    margin-top: 10px;
+  }
+  
+  .hero-content i {
+    font-size: 50px;
+    margin-top: 10px;
+  }
+  .fade {
+    animation: fadeEffect 4s infinite;
+  }
+  
+  @keyframes fadeEffect {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
