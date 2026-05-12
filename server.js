@@ -70,7 +70,7 @@ app.post('/signup', (req, res) => {
   });
 });
 
-// ----------------- MEDICAL ASSISTANT REQUEST API -----------------
+// ----------------- MEDICAL ASSISTANT REQUEST API ------------------
 app.post('/medical-assistant-request', (req, res) => {
   const {
     traveler_name, email, phone, age, travel_from, travel_to, travel_date,
