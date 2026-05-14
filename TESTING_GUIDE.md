@@ -7,7 +7,6 @@ This guide provides comprehensive test scenarios to validate all new features:
 - User login
 - Medical assistant request
 - Database operations
-
 ---
 
 ## Environment Setup for Testing
