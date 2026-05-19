@@ -130,7 +130,6 @@ Complete tracking of all medical assistance requests with:
 - Request status tracking
 - Audit timestamps
 ```
-
 ---
 
 ## 📁 Files Created & Updated
